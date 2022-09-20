@@ -37,8 +37,12 @@ async function printCorrelationVisualizerImage() {
 
   await page.setViewport(defaultViewport);
 
+  const url = `${process.env.COINFOLIO_BASE_URL}/analytics/correlation-visualizer/embed`;
+
   await page.goto(
-    `http://localhost:3000/analytics/correlation-visualizer/embed`
+    url
+    // `http://localhost:3000/analytics/correlation-visualizer/embed`
+    // `${process.env.COINFOLIO_BASE_URL}/analytics/correlation-visualizer/embed`,
     // `https://google.com`
     // `https://coinfolio.capital/bapp/strategies/${strategyId}/factsheet`,
     // {
