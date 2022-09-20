@@ -1,10 +1,8 @@
 const puppeteer = require("puppeteer");
 
-const printFactsheetPDF = require("./printFactsheetPDF");
+async function printFactsheetPDF() {
+  console.log("about to create Factsheet PDF...");
 
-console.log("creating factsheet pdf...");
-
-async function printPDF() {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
 
@@ -44,5 +42,4 @@ async function printPDF() {
   return pdf;
 }
 
-// printPDF();
-printFactsheetPDF();
+module.exports = printFactsheetPDF;
