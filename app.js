@@ -21,8 +21,22 @@ app.get("/factsheet", async (req, res) => {
   res.send(pdfBuffer);
 });
 
-app.get("/analytics/correlation-visualizer.png", async (req, res) => {
-  const screenshotBuffer = await printCorrelationVisualizerImage();
+// app.get("/analytics/correlation-visualizer.png", async (req, res) => {
+app.get("/analytics/correlation-visualizer", async (req, res) => {
+  const firstAsset = req.query.firstAsset;
+  const secondAsset = req.query.secondAsset;
+  const endDate = new Date(req.query.endDate);
+  const timePeriod = req.query.timePeriod;
+
+  const modelInputs = {
+    firstAsset,
+    secondAsset,
+    endDate,
+    timePeriod,
+  };
+
+  const screenshotBuffer = await printCorrelationVisualizerImage(modelInputs);
+
   res.send(screenshotBuffer);
 });
 

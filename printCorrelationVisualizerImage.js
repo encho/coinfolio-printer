@@ -5,7 +5,12 @@ const defaultViewport = {
   width: 1200,
 };
 
-async function printCorrelationVisualizerImage() {
+async function printCorrelationVisualizerImage({
+  firstAsset,
+  secondAsset,
+  timePeriod,
+  endDate,
+}) {
   console.log("about to create correlation visualizre image...");
 
   // const browser = await puppeteer.launch({ headless: true });
@@ -37,7 +42,11 @@ async function printCorrelationVisualizerImage() {
 
   await page.setViewport(defaultViewport);
 
-  const url = `${process.env.COINFOLIO_BASE_URL}/analytics/correlation-visualizer/embed`;
+  // http://localhost:3000/analytics/correlation-visualizer?timePeriod=3M&firstAsset=XAU-USD&endDate=2022-09-06T12%3A34%3A01.000Z
+  const queryParameters = `firstAsset=${firstAsset}&secondAsset=${secondAsset}&endDate=${endDate.toISOString()}&timePeriod=${timePeriod}`;
+  // const queryParameters = `firstAsset=${firstAsset}&secondAsset=${secondAsset}`;
+  // const queryParameters = `timePeriod=${"3Y"}&firstAsset=${"XAU-USD"}&secondAsset=${"XAU-USD"}`;
+  const url = `${process.env.COINFOLIO_BASE_URL}/analytics/correlation-visualizer/embed?${queryParameters}`;
 
   await page.goto(
     url
