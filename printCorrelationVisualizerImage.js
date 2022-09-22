@@ -46,7 +46,7 @@ async function printCorrelationVisualizerImage({
   const queryParameters = `firstAsset=${firstAsset}&secondAsset=${secondAsset}&endDate=${endDate.toISOString()}&timePeriod=${timePeriod}`;
   // const queryParameters = `firstAsset=${firstAsset}&secondAsset=${secondAsset}`;
   // const queryParameters = `timePeriod=${"3Y"}&firstAsset=${"XAU-USD"}&secondAsset=${"XAU-USD"}`;
-  const url = `${process.env.COINFOLIO_BASE_URL}/analytics/correlation-visualizer/embed?${queryParameters}`;
+  const url = `${process.env.COINFOLIO_BASE_URL}/analytics/correlation-visualizer/og-image?${queryParameters}`;
 
   await page.goto(
     url
