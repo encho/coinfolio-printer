@@ -35,6 +35,7 @@ async function printOgImage({ firstAsset, secondAsset, timePeriod, endDate }) {
 
   await page.goto(url);
   await page.waitForSelector("#CorrelationToolChartOgImage");
+  await page.waitForTimeout(200);
 
   const screenshot = await page.screenshot({
     path: filePath,
@@ -79,6 +80,7 @@ async function printChart({ firstAsset, secondAsset, timePeriod, endDate }) {
 
   await page.goto(url);
   await page.waitForSelector("#CorrelationToolChart");
+  await page.waitForTimeout(200);
 
   const screenshot = await page.screenshot({
     path: filePath,
