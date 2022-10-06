@@ -2,7 +2,7 @@ const express = require("express");
 const puppeteer = require("puppeteer");
 
 const printFactsheetPDF = require("./printFactsheetPDF");
-const printCorrelationVisualizerImage = require("./printCorrelationVisualizerImage");
+const correlationVisualizer = require("./correlationVisualizer");
 
 const app = express();
 const port = 9421;
@@ -21,8 +21,9 @@ app.get("/factsheet", async (req, res) => {
   res.send(pdfBuffer);
 });
 
-// app.get("/analytics/correlation-visualizer.png", async (req, res) => {
-app.get("/analytics/correlation-visualizer", async (req, res) => {
+app.get("/analytics/correlation-visualizer/:type", async (req, res) => {
+  const type = req.params.type;
+  console.log("endpoint - print correlation visualizer with type: " + type);
   const firstAsset = req.query.firstAsset;
   const secondAsset = req.query.secondAsset;
   const endDate = new Date(req.query.endDate);
@@ -35,7 +36,12 @@ app.get("/analytics/correlation-visualizer", async (req, res) => {
     timePeriod,
   };
 
-  const screenshotBuffer = await printCorrelationVisualizerImage(modelInputs);
+  const printer =
+    type === "og-image"
+      ? correlationVisualizer.printOgImage
+      : correlationVisualizer.printChart;
+
+  const screenshotBuffer = await printer(modelInputs);
 
   res.send(screenshotBuffer);
 });
