@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 
-async function printOgImage({ firstAsset, secondAsset, timePeriod, endDate }) {
-  console.log("printing og-image for correlation visualizer...");
+async function printOgImage({ ticker, timePeriod, endDate }) {
+  console.log("printing og-image for price charts...");
 
   // default linkedin viewport
   const defaultViewport = {
@@ -22,7 +22,7 @@ async function printOgImage({ firstAsset, secondAsset, timePeriod, endDate }) {
   const page = await browser.newPage();
 
   // TODO filename with pars for eventually caching!
-  const filePath = `./performance-compare.png`;
+  const filePath = `./price-charts.png`;
 
   await page.setUserAgent(
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
@@ -30,11 +30,11 @@ async function printOgImage({ firstAsset, secondAsset, timePeriod, endDate }) {
 
   await page.setViewport(defaultViewport);
 
-  const queryParameters = `firstAsset=${firstAsset}&secondAsset=${secondAsset}&endDate=${endDate.toISOString()}&timePeriod=${timePeriod}`;
-  const url = `${process.env.NERDY_BASE_URL}/analytics/performance-compare/og-image?${queryParameters}`;
+  const queryParameters = `ticker=${ticker}&endDate=${endDate.toISOString()}&timePeriod=${timePeriod}`;
+  const url = `${process.env.NERDY_BASE_URL}/analytics/price-charts/og-image?${queryParameters}`;
 
   await page.goto(url);
-  await page.waitForSelector("#Tools_PerformanceCompareChart_OgImage");
+  await page.waitForSelector("#Tools_PriceChart");
   await page.waitForTimeout(200);
 
   const screenshot = await page.screenshot({
@@ -46,8 +46,8 @@ async function printOgImage({ firstAsset, secondAsset, timePeriod, endDate }) {
   return screenshot;
 }
 
-async function printChart({ firstAsset, secondAsset, timePeriod, endDate }) {
-  console.log("printing chart for correlation visualizer...");
+async function printChart({ ticker, timePeriod, endDate }) {
+  console.log("printing chart for price charts...");
 
   const defaultViewport = {
     height: 600,
@@ -67,7 +67,7 @@ async function printChart({ firstAsset, secondAsset, timePeriod, endDate }) {
   const page = await browser.newPage();
 
   // TODO filename with pars for eventually caching!
-  const filePath = `./performance-compare.png`;
+  const filePath = `./price-charts.png`;
 
   await page.setUserAgent(
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
@@ -75,16 +75,12 @@ async function printChart({ firstAsset, secondAsset, timePeriod, endDate }) {
 
   await page.setViewport(defaultViewport);
 
-  const queryParameters = `firstAsset=${firstAsset}&secondAsset=${secondAsset}&endDate=${endDate.toISOString()}&timePeriod=${timePeriod}`;
-  const url = `${process.env.NERDY_BASE_URL}/analytics/performance-compare/embed?${queryParameters}`;
+  const queryParameters = `ticker=${ticker}&endDate=${endDate.toISOString()}&timePeriod=${timePeriod}`;
+  const url = `${process.env.NERDY_BASE_URL}/analytics/price-charts/embed?${queryParameters}`;
 
   await page.goto(url);
-
-  await page.waitForSelector("#Tools_PerformanceCompareChart");
+  await page.waitForSelector("#Tools_PriceChart");
   await page.waitForTimeout(200);
-
-  // await page.waitForSelector("#CorrelationToolChart");
-  // await page.waitForTimeout(200);
   // await page.waitForTimeout(400);
 
   const screenshot = await page.screenshot({
