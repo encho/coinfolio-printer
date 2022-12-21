@@ -3,6 +3,8 @@ const puppeteer = require("puppeteer");
 
 const printFactsheetPDF = require("./printFactsheetPDF");
 const correlationVisualizer = require("./correlationVisualizer");
+const performanceCompare = require("./performanceCompare");
+const priceCharts = require("./priceCharts");
 
 const app = express();
 const port = 9421;
@@ -40,6 +42,54 @@ app.get("/analytics/correlation-visualizer/:type", async (req, res) => {
     type === "og-image"
       ? correlationVisualizer.printOgImage
       : correlationVisualizer.printChart;
+
+  const screenshotBuffer = await printer(modelInputs);
+
+  res.send(screenshotBuffer);
+});
+
+app.get("/nerdy/performance-compare/:type", async (req, res) => {
+  const type = req.params.type;
+  console.log(
+    "endpoint - print performance compare visualizer with type: " + type
+  );
+  const firstAsset = req.query.firstAsset;
+  const secondAsset = req.query.secondAsset;
+  const endDate = new Date(req.query.endDate);
+  const timePeriod = req.query.timePeriod;
+
+  const modelInputs = {
+    firstAsset,
+    secondAsset,
+    endDate,
+    timePeriod,
+  };
+
+  const printer =
+    type === "og-image"
+      ? performanceCompare.printOgImage
+      : performanceCompare.printChart;
+
+  const screenshotBuffer = await printer(modelInputs);
+
+  res.send(screenshotBuffer);
+});
+
+app.get("/nerdy/price-charts/:type", async (req, res) => {
+  const type = req.params.type;
+  console.log("endpoint - print price charts visualizer with type: " + type);
+  const ticker = req.query.ticker;
+  const endDate = new Date(req.query.endDate);
+  const timePeriod = req.query.timePeriod;
+
+  const modelInputs = {
+    ticker,
+    endDate,
+    timePeriod,
+  };
+
+  const printer =
+    type === "og-image" ? priceCharts.printOgImage : priceCharts.printChart;
 
   const screenshotBuffer = await printer(modelInputs);
 
