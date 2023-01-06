@@ -35,7 +35,7 @@ async function printOgImage({ ticker, timePeriod, endDate }) {
 
   await page.goto(url);
   await page.waitForSelector("#Tools_PriceChart");
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(200);
 
   const screenshot = await page.screenshot({
     path: filePath,
@@ -80,7 +80,7 @@ async function printChart({ ticker, timePeriod, endDate }) {
 
   await page.goto(url);
   await page.waitForSelector("#Tools_PriceChart");
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(200);
 
   const screenshot = await page.screenshot({
     path: filePath,
