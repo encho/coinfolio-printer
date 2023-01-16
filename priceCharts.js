@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer");
 
-const TIMEOUT = 600;
+const TIMEOUT = 1000;
 
 async function printOgImage({ ticker, timePeriod, endDate }) {
   console.log("printing og-image for price charts...");

@@ -1,6 +1,6 @@
 const puppeteer = require("puppeteer");
 
-const TIMEOUT = 600;
+const TIMEOUT = 1000;
 
 async function printOgImage({ firstAsset, secondAsset, timePeriod, endDate }) {
   console.log("printing og-image for correlation visualizer...");
