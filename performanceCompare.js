@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 
+const TIMEOUT = 600;
+
 async function printOgImage({ firstAsset, secondAsset, timePeriod, endDate }) {
   console.log("printing og-image for correlation visualizer...");
 
@@ -34,8 +36,9 @@ async function printOgImage({ firstAsset, secondAsset, timePeriod, endDate }) {
   const url = `${process.env.NERDY_BASE_URL}/analytics/performance-compare/og-image?${queryParameters}`;
 
   await page.goto(url);
+
   await page.waitForSelector("#Tools_PerformanceCompareChart_OgImage");
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(TIMEOUT);
 
   const screenshot = await page.screenshot({
     path: filePath,
@@ -81,11 +84,7 @@ async function printChart({ firstAsset, secondAsset, timePeriod, endDate }) {
   await page.goto(url);
 
   await page.waitForSelector("#Tools_PerformanceCompareChart");
-  await page.waitForTimeout(400);
-
-  // await page.waitForSelector("#CorrelationToolChart");
-  // await page.waitForTimeout(200);
-  // await page.waitForTimeout(400);
+  await page.waitForTimeout(TIMEOUT);
 
   const screenshot = await page.screenshot({
     path: filePath,
