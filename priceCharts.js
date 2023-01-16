@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 
+const TIMEOUT = 1000;
+
 async function printOgImage({ ticker, timePeriod, endDate }) {
   console.log("printing og-image for price charts...");
 
@@ -34,8 +36,9 @@ async function printOgImage({ ticker, timePeriod, endDate }) {
   const url = `${process.env.NERDY_BASE_URL}/analytics/price-charts/og-image?${queryParameters}`;
 
   await page.goto(url);
+
   await page.waitForSelector("#Tools_PriceChart");
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(TIMEOUT);
 
   const screenshot = await page.screenshot({
     path: filePath,
@@ -79,8 +82,9 @@ async function printChart({ ticker, timePeriod, endDate }) {
   const url = `${process.env.NERDY_BASE_URL}/analytics/price-charts/embed?${queryParameters}`;
 
   await page.goto(url);
+
   await page.waitForSelector("#Tools_PriceChart");
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(TIMEOUT);
 
   const screenshot = await page.screenshot({
     path: filePath,
